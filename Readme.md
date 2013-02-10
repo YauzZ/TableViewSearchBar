@@ -13,3 +13,4 @@ The last one is only used in the Contacts app and is quite interesting. Take a l
 - - -
 
 ![Screenshot](screenshot.png "Screenshot")
+![Screenshot Search](screenshot-search.png "Screenshot Search")
