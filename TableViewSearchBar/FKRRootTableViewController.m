@@ -38,7 +38,7 @@ static NSString * const kFKRRootTableViewControllerShowSectionIndexesUserDefault
     if ((self = [super initWithStyle:UITableViewStyleGrouped])) {
         self.title = @"Root";
         
-        self.showSectionIndexes = [[NSUserDefaults standardUserDefaults] boolForKey:kFKRRootTableViewControllerShowSectionIndexesUserDefaultsKey];
+        _showSectionIndexes = [[NSUserDefaults standardUserDefaults] boolForKey:kFKRRootTableViewControllerShowSectionIndexesUserDefaultsKey];
     }
     
     return self;
