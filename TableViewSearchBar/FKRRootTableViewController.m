@@ -113,7 +113,7 @@ static NSString * const kFKRRootTableViewControllerShowSectionIndexesUserDefault
         }
         
         if (indexPath.row == 0) {
-            cell.textLabel.text = @"Default SearchBar";
+            cell.textLabel.text = @"Default Search Bar";
             cell.detailTextLabel.text = @"Mail, Music, Videos, ...";
         } else if (indexPath.row == 1) {
             cell.textLabel.text = @"Top Search Bar";
