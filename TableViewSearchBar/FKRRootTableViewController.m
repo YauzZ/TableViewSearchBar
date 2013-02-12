@@ -49,16 +49,16 @@ static NSString * const kFKRRootTableViewControllerShowSectionIndexesUserDefault
 - (UISwitch *)sectionIndexesSwitch
 {
     if (_sectionIndexesSwitch == nil) {
-        _sectionIndexesSwitch = [[UISwitch alloc] initWithFrame:CGRectMake(213, floor((44 - 27) / 2), 40, 27)];
+        _sectionIndexesSwitch = [[UISwitch alloc] initWithFrame:CGRectZero];
         [_sectionIndexesSwitch addTarget:self action:@selector(toggleSectionIndexesSwitch:) forControlEvents:UIControlEventValueChanged];
     }
     
     return _sectionIndexesSwitch;
 }
 
-- (void)toggleSectionIndexesSwitch:(UISwitch *)sender
+- (void)toggleSectionIndexesSwitch:(id)sender
 {
-    self.showSectionIndexes = sender.isOn;
+    self.showSectionIndexes = [(UISwitch *)sender isOn];
     [[NSUserDefaults standardUserDefaults] setBool:self.showSectionIndexes forKey:kFKRRootTableViewControllerShowSectionIndexesUserDefaultsKey];
 }
 
@@ -96,13 +96,12 @@ static NSString * const kFKRRootTableViewControllerShowSectionIndexesUserDefault
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:kFKRRootTableViewControllerSectionIndexesSwitchTableViewCellIdentifier];
         if (cell == nil) {
             cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:kFKRRootTableViewControllerSectionIndexesSwitchTableViewCellIdentifier];
-            
-            [cell.contentView addSubview:self.sectionIndexesSwitch];
         }
         
         cell.textLabel.text = @"Show Section Indexes";
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         
+        cell.accessoryView = self.sectionIndexesSwitch;
         self.sectionIndexesSwitch.on = self.showSectionIndexes;
         
         return cell;
