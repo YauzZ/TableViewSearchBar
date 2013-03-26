@@ -15,8 +15,10 @@ static NSString * const kFKRSearchBarTableViewControllerDefaultTableViewCellIden
 }
 
 @property(nonatomic, copy) NSArray *famousPersons;
-@property(nonatomic, copy) NSArray *filteredPersons;
 @property(nonatomic, copy) NSArray *sections;
+
+@property(nonatomic, copy) NSArray *filteredPersons;
+@property(nonatomic, copy) NSString *currentSearchString;
 
 @property(nonatomic, strong, readwrite) UITableView *tableView;
 @property(nonatomic, strong, readwrite) UISearchBar *searchBar;
@@ -189,17 +191,24 @@ static NSString * const kFKRSearchBarTableViewControllerDefaultTableViewCellIden
 
 - (void)searchDisplayControllerWillBeginSearch:(UISearchDisplayController *)controller
 {
-    self.filteredPersons = self.famousPersons;
+    self.filteredPersons = nil;
+    self.currentSearchString = @"";
 }
 
 - (void)searchDisplayControllerDidEndSearch:(UISearchDisplayController *)controller
 {
     self.filteredPersons = nil;
+    self.currentSearchString = nil;
 }
 
 - (BOOL)searchDisplayController:(UISearchDisplayController *)controller shouldReloadTableForSearchString:(NSString *)searchString
 {
-    self.filteredPersons = [self.filteredPersons filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"SELF contains[cd] %@", searchString]];
+    NSArray *personsToSearch = self.famousPersons;
+    if (self.filteredPersons != nil && [searchString rangeOfString:self.currentSearchString].location == 0) { // If the new search string starts with the last search string, reuse the already filtered array so searching is faster
+        personsToSearch = self.filteredPersons;
+    }
+    
+    self.filteredPersons = [personsToSearch filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"SELF contains[cd] %@", searchString]];
     
     return YES;
 }
