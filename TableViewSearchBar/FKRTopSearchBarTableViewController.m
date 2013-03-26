@@ -49,16 +49,18 @@
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
-    if (scrollView.contentOffset.y < 44) {
-        self.tableView.scrollIndicatorInsets = UIEdgeInsetsMake(CGRectGetHeight(self.searchBar.bounds) - MAX(scrollView.contentOffset.y, 0), 0, 0, 0);
-    } else {
-        self.tableView.scrollIndicatorInsets = UIEdgeInsetsZero;
+    if (scrollView == self.tableView) { // Don't do anything if the search table view get's scrolled
+        if (scrollView.contentOffset.y < 44) {
+            self.tableView.scrollIndicatorInsets = UIEdgeInsetsMake(CGRectGetHeight(self.searchBar.bounds) - MAX(scrollView.contentOffset.y, 0), 0, 0, 0);
+        } else {
+            self.tableView.scrollIndicatorInsets = UIEdgeInsetsZero;
+        }
+        
+        CGRect searchBarFrame = self.searchBar.frame;
+        searchBarFrame.origin.y = MIN(scrollView.contentOffset.y, 0);
+        
+        self.searchBar.frame = searchBarFrame;
     }
-    
-    CGRect searchBarFrame = self.searchBar.frame;
-    searchBarFrame.origin.y = MIN(scrollView.contentOffset.y, 0);
-    
-    self.searchBar.frame = searchBarFrame;
 }
 
 @end

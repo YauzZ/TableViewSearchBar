@@ -70,17 +70,19 @@
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
-    if (!_mayUsePrivateAPI) {
-        if (scrollView.contentOffset.y < -CGRectGetHeight(self.searchBar.bounds)) {
-            self.searchBar.layer.zPosition = 0; // Make sure the search bar is below the section index titles control when scrolling up
-        } else {
-            self.searchBar.layer.zPosition = 1; // Make sure the search bar is above the section headers when scrolling down
+    if (scrollView == self.tableView) { // Don't do anything if the search table view get's scrolled
+        if (!_mayUsePrivateAPI) {
+            if (scrollView.contentOffset.y < -CGRectGetHeight(self.searchBar.bounds)) {
+                self.searchBar.layer.zPosition = 0; // Make sure the search bar is below the section index titles control when scrolling up
+            } else {
+                self.searchBar.layer.zPosition = 1; // Make sure the search bar is above the section headers when scrolling down
+            }
+            
+            CGRect searchBarFrame = self.searchBar.frame;
+            searchBarFrame.origin.y = MAX(scrollView.contentOffset.y, -CGRectGetHeight(searchBarFrame));
+            
+            self.searchBar.frame = searchBarFrame;
         }
-        
-        CGRect searchBarFrame = self.searchBar.frame;
-        searchBarFrame.origin.y = MAX(scrollView.contentOffset.y, -CGRectGetHeight(searchBarFrame));
-        
-        self.searchBar.frame = searchBarFrame;
     }
 }
 
