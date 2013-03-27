@@ -203,12 +203,18 @@ static NSString * const kFKRSearchBarTableViewControllerDefaultTableViewCellIden
 
 - (BOOL)searchDisplayController:(UISearchDisplayController *)controller shouldReloadTableForSearchString:(NSString *)searchString
 {
-    NSArray *personsToSearch = self.famousPersons;
-    if (self.filteredPersons != nil && [searchString rangeOfString:self.currentSearchString].location == 0) { // If the new search string starts with the last search string, reuse the already filtered array so searching is faster
-        personsToSearch = self.filteredPersons;
+    if (searchString.length > 0) { // Should always be the case
+        NSArray *personsToSearch = self.famousPersons;
+        if (self.currentSearchString.length > 0 && [searchString rangeOfString:self.currentSearchString].location == 0) { // If the new search string starts with the last search string, reuse the already filtered array so searching is faster
+            personsToSearch = self.filteredPersons;
+        }
+        
+        self.filteredPersons = [personsToSearch filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"SELF contains[cd] %@", searchString]];
+    } else {
+        self.filteredPersons = self.famousPersons;
     }
     
-    self.filteredPersons = [personsToSearch filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"SELF contains[cd] %@", searchString]];
+    self.currentSearchString = searchString;
     
     return YES;
 }
