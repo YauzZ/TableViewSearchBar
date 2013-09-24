@@ -1,4 +1,4 @@
-**iOS 7**
+# iOS 7
 In iOS 7 most of Apple's apps now use the default search bar behavior. Unsurprisingly, the default search bar behavior is the only one that works fine without any modifications when compiled against the iOS 7 SDK.
 
 This demo project won't be updated to support iOS 7, but I'll gladly accept pull requests.
