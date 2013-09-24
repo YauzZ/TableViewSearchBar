@@ -1,3 +1,8 @@
+**iOS 7**
+In iOS 7 most of Apple's apps now use the default search bar behavior. Unsurprisingly, the default search bar behavior is the only one that works fine without any modifications when compiled against the iOS 7 SDK.
+
+This demo project won't be updated to support iOS 7, but I'll gladly accept pull requests.
+
 **TableViewSearchBar** is a small demo project that demonstrates the various scrolling behaviors of a *UISearchBar* inside a *UITableView* found in Apple's own apps.
 
 The project has been made in order to answer [this stackoverflow question](http://stackoverflow.com/questions/14759506/ios-native-contacts-app-sticky-search-bar-and-section-header-behavior "iOS native Contacts App: sticky search bar and section header behavior").
